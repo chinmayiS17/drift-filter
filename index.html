@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>We_Can_Code | Drift Filter</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     LOGO INTRO
+===================================================== -->
+
+<div id="logo-intro">
+
+    <img
+        src="images/logo-intro.png"
+        alt="Drift Filter Logo"
+    >
+
+    <div class="loading-dots">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SPLASH SCREEN
+===================================================== -->
+
+<div id="splash-screen">
+
+    <img
+        src="images/splash.png.png"
+        alt="We_Can_Code Drift Filter"
+    >
+
+</div>
+
+
+<!-- =====================================================
+     MAIN WEBSITE
+===================================================== -->
+
+<div id="main-website">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="team-name">
+        We_Can_Code
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="dashboard-page" class="page">
+
+    <div class="dashboard-panel">
+
+        <h1>Drift Filter</h1>
+
+        <p class="dashboard-subtitle">
+            Predictive Component Reliability Analysis
+        </p>
+
+
+        <div class="input-options">
+
+
+            <!-- ================= CSV ================= -->
+
+            <div class="input-card">
+
+                <h2>ATTACH CSV FILE</h2>
+
+                <div class="upload-icon">
+                    ↑
+                </div>
+
+                <p>
+                    Upload component test data
+                    for drift analysis
+                </p>
+
+                <input
+                    type="file"
+                    id="csv-input"
+                    accept=".csv"
+                    hidden
+                >
+
+                <button
+                    onclick="document.getElementById('csv-input').click()"
+                >
+                    CHOOSE CSV FILE
+                </button>
+
+                <small>
+                    Supported format: CSV
+                </small>
+
+            </div>
+
+
+            <!-- ================= MANUAL ================= -->
+
+            <div class="input-card">
+
+                <h2>MANUAL ENTRY</h2>
+
+                <div class="manual-icon">
+                    ☷
+                </div>
+
+                <p>
+                    Enter component parameters
+                    manually
+                </p>
+
+                <button onclick="startManualEntry()">
+                    START MANUAL ENTRY
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MODULE A RESULT
+===================================================== -->
+
+<section id="module-a-page" class="page hidden">
+
+    <div class="result-panel">
+
+        <div class="module-label">
+            MODULE A
+        </div>
+
+        <h1>
+            Dynamic Outlier Detection
+        </h1>
+
+        <p class="result-subtitle">
+            Point-in-time component analysis
+        </p>
+
+
+        <!-- COMPONENT SELECTOR -->
+
+        <div class="component-selector">
+
+            <label for="component-select">
+                SELECT COMPONENT
+            </label>
+
+            <select id="component-select">
+
+                <option value="">
+                    Select a component
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- COMPONENT INFORMATION -->
+
+        <div class="component-info">
+
+            <div>
+
+                <span>
+                    Component ID
+                </span>
+
+                <strong id="final-component-id">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Lot ID
+                </span>
+
+                <strong id="selected-lot-id">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Parameter
+                </span>
+
+                <strong>
+                    Leakage Current
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- MODULE A ANALYSIS -->
+
+        <div class="analysis-box">
+
+            <div>
+
+                <span>
+                    Lot Median
+                </span>
+
+                <strong id="module-a-median">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    MAD
+                </span>
+
+                <strong id="module-a-mad">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Modified Z-score
+                </span>
+
+                <strong id="module-a-zscore">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Module A Risk
+                </span>
+
+                <strong id="module-a-risk">
+                    --
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- MODULE A STATUS -->
+
+        <div
+            class="status-box"
+            id="module-a-status"
+        >
+
+            <span id="module-a-status-title">
+                ANALYZING...
+            </span>
+
+            <small id="module-a-status-message">
+                Calculating component deviation from the lot.
+            </small>
+
+        </div>
+
+
+        <button onclick="showModuleBInput()">
+
+            CONTINUE TO MODULE B →
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MODULE B INPUT
+===================================================== -->
+
+<section
+    id="module-b-input-page"
+    class="page hidden"
+>
+
+    <div class="result-panel">
+
+        <div class="module-label">
+            MODULE B
+        </div>
+
+        <h1>
+            Drift Prediction Input
+        </h1>
+
+        <p class="result-subtitle">
+            Enter early time-series values
+        </p>
+
+
+        <div class="form-grid">
+
+
+            <!-- 0h -->
+
+            <label>
+
+                0h Measurement
+
+                <input
+                    type="number"
+                    id="module-b-0h"
+                    step="any"
+                    placeholder="Enter 0h value"
+                >
+
+            </label>
+
+
+            <!-- 24h -->
+
+            <label>
+
+                24h Measurement
+
+                <input
+                    type="number"
+                    id="module-b-24h"
+                    step="any"
+                    placeholder="Enter 24h value"
+                >
+
+            </label>
+
+
+            <!-- Safety threshold -->
+
+            <label>
+
+                Safe Drift Threshold
+
+                <input
+                    type="number"
+                    id="safe-drift-threshold"
+                    step="any"
+                    value="5"
+                >
+
+            </label>
+
+        </div>
+
+
+        <button onclick="runModuleBPrediction()">
+
+            RUN DRIFT PREDICTION →
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MODULE B RESULT
+===================================================== -->
+
+<section
+    id="module-b-page"
+    class="page hidden"
+>
+
+    <div class="result-panel">
+
+        <div class="module-label">
+            MODULE B
+        </div>
+
+        <h1>
+            Drift Prediction
+        </h1>
+
+        <p class="result-subtitle">
+            Time-series trajectory analysis
+        </p>
+
+
+        <!-- TIME SERIES -->
+
+        <div class="time-series">
+
+
+            <div>
+
+                <span>
+                    0h
+                </span>
+
+                <strong id="module-b-0h-result">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    24h
+                </span>
+
+                <strong id="module-b-24h-result">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    96h
+                </span>
+
+                <strong id="estimated-96h">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    168h
+                </span>
+
+                <strong
+                    class="predicted"
+                    id="predicted-168h"
+                >
+                    --
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- MODULE B ANALYSIS -->
+
+        <div class="analysis-box">
+
+
+            <div>
+
+                <span>
+                    Predicted Drift
+                </span>
+
+                <strong id="module-b-drift">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Safety Threshold
+                </span>
+
+                <strong>
+                    5
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Module B Risk
+                </span>
+
+                <strong id="module-b-risk">
+                    --
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div
+            class="status-box"
+            id="module-b-status"
+        >
+
+            <span id="module-b-status-title">
+                ANALYZING...
+            </span>
+
+            <small id="module-b-status-message">
+                Evaluating predicted trajectory.
+            </small>
+
+        </div>
+
+
+        <button onclick="showFinalReport()">
+
+            VIEW FULL QA REPORT →
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL REPORT
+===================================================== -->
+
+<section
+    id="final-report-page"
+    class="page hidden"
+>
+
+    <div class="report-panel">
+
+
+        <!-- REPORT HEADING -->
+
+        <div class="report-heading">
+
+            <div class="module-label">
+                DRIFT FILTER
+            </div>
+
+            <h1>
+                QA REPORT
+            </h1>
+
+            <p>
+                Electronic Component Reliability Analysis
+            </p>
+
+        </div>
+
+
+        <!-- COMPONENT INFORMATION -->
+
+        <div class="report-section">
+
+            <div class="info-row">
+
+
+                <div>
+
+                    <span>
+                        Component ID
+                    </span>
+
+                    <strong id="final-report-component-id">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Lot ID
+                    </span>
+
+                    <strong id="final-lot-id">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="parameter-row">
+
+                <span>
+                    Parameter
+                </span>
+
+                <strong>
+                    Leakage Current
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- TIME SERIES -->
+
+        <div class="report-section">
+
+            <h3>
+                MEASURED TRAJECTORY
+            </h3>
+
+
+            <div class="table-header">
+
+                <span>
+                    TIME
+                </span>
+
+                <span>
+                    VALUE
+                </span>
+
+            </div>
+
+
+            <div class="table-row">
+
+                <span>
+                    0h
+                </span>
+
+                <strong id="final-module-b-0h">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="table-row">
+
+                <span>
+                    24h
+                </span>
+
+                <strong id="final-module-b-24h">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="table-row">
+
+                <span>
+                    96h
+                </span>
+
+                <strong id="final-module-b-96h">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="table-row predicted-row">
+
+                <span>
+                    168h
+                </span>
+
+                <strong id="final-predicted-168h">
+                    PREDICTED: --
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="report-section">
+
+            <div class="statistics-grid">
+
+
+                <div class="analysis-box">
+
+
+                    <div>
+
+                        <span>
+                            Lot Median
+                        </span>
+
+                        <strong id="final-module-a-median">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            MAD
+                        </span>
+
+                        <strong id="final-module-a-mad">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Modified Z-score
+                        </span>
+
+                        <strong id="final-module-a-zscore">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Module A Risk
+                        </span>
+
+                        <strong id="final-module-a-risk">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="risk-card">
+
+                    <span>
+                        MODULE B RISK
+                    </span>
+
+                    <strong id="final-module-b-risk">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="risk-card combined-risk">
+
+                    <span>
+                        COMBINED RISK
+                    </span>
+
+                    <strong id="combined-risk">
+                        --
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- FINAL DECISION -->
+
+        <div class="decision-cloud">
+
+            <div class="decision-box">
+
+                <span>
+                    FINAL DECISION
+                </span>
+
+                <strong id="final-decision">
+                    ANALYZING...
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- REASON -->
+
+        <div class="reason-section">
+
+            <h3>
+                WHY WAS THIS FLAGGED?
+            </h3>
+
+            <ul id="final-reason"></ul>
+
+        </div>
+
+
+        <!-- BACK -->
+
+        <button
+            class="back-button"
+            onclick="goToDashboard()"
+        >
+
+            ← BACK TO DASHBOARD
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MANUAL ENTRY - BASIC INFORMATION
+===================================================== -->
+
+<section
+    id="manual-page"
+    class="page hidden"
+>
+
+    <div class="result-panel">
+
+        <div class="module-label">
+            MANUAL ENTRY
+        </div>
+
+        <h1>
+            Component Information
+        </h1>
+
+        <p class="result-subtitle">
+            Enter basic component information
+        </p>
+
+
+        <div class="form-grid">
+
+
+            <!-- COMPONENT ID -->
+
+            <label>
+
+                Component ID
+
+                <input
+                    type="text"
+                    id="manual-component-id"
+                    placeholder="D105"
+                    oninput="this.value = this.value.toUpperCase()"
+                >
+
+            </label>
+
+
+            <!-- LOT ID -->
+
+            <label>
+
+                Lot ID
+
+                <input
+                    type="text"
+                    id="manual-lot-id"
+                    placeholder="LOT_27"
+                    oninput="this.value = this.value.toUpperCase()"
+                >
+
+            </label>
+
+
+            <!-- TEMPERATURE -->
+
+            <label>
+
+                Temperature (°C)
+
+                <input
+                    type="number"
+                    id="manual-temperature"
+                    placeholder="125"
+                    step="any"
+                >
+
+            </label>
+
+
+            <!-- VOLTAGE -->
+
+            <label>
+
+                Voltage (V)
+
+                <input
+                    type="number"
+                    id="manual-voltage"
+                    placeholder="5"
+                    step="any"
+                >
+
+            </label>
+
+        </div>
+
+
+        <button onclick="showManualModuleAInput()">
+
+            CONTINUE TO MODULE A →
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MANUAL MODULE A INPUT
+===================================================== -->
+
+<section
+    id="manual-module-a-input-page"
+    class="page hidden"
+>
+
+    <div class="result-panel">
+
+        <div class="module-label">
+            MODULE A
+        </div>
+
+        <h1>
+            Module A Input
+        </h1>
+
+        <p class="result-subtitle">
+            Enter lot values and component 0h value
+        </p>
+
+
+        <div class="form-grid">
+
+
+            <!-- LOT VALUES -->
+
+            <label>
+
+                Lot 0h Values
+
+                <input
+                    type="text"
+                    id="manual-lot-values"
+                    placeholder="10.2, 10.5, 10.1, 10.8, 10.4"
+                >
+
+            </label>
+
+
+            <!-- COMPONENT VALUE -->
+
+            <label>
+
+                Component 0h Value
+
+                <input
+                    type="number"
+                    id="manual-component-value"
+                    step="any"
+                    placeholder="Enter component 0h value"
+                >
+
+            </label>
+
+        </div>
+
+
+        <button onclick="runManualModuleA()">
+
+            RUN MODULE A →
+
+        </button>
+
+    </div>
+
+</section>
+
+
+</div>
+<!-- END MAIN WEBSITE -->
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
